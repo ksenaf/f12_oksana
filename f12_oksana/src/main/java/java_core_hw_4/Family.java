@@ -1,16 +1,19 @@
 package java_core_hw_4;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Family {
     private Human mother;
     private Human father;
     private Human[] children;
     private Pet pet;
 
-    // Constructor
+    // Constructor with two parents
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
-        this.children = new Human[0];
+        this.children = new Human[0]; // initially empty
         mother.setFamily(this);
         father.setFamily(this);
     }
@@ -18,66 +21,63 @@ public class Family {
     // Getters and setters
     public Human getMother() { return mother; }
     public void setMother(Human mother) { this.mother = mother; }
-
     public Human getFather() { return father; }
     public void setFather(Human father) { this.father = father; }
-
     public Human[] getChildren() { return children; }
     public void setChildren(Human[] children) { this.children = children; }
-
     public Pet getPet() { return pet; }
     public void setPet(Pet pet) { this.pet = pet; }
 
-    // Methods
+    // Add a child
     public void addChild(Human child) {
-        Human[] newChildren = new Human[children.length + 1];
-        for (int i = 0; i < children.length; i++) {
-            newChildren[i] = children[i];
-        }
+        Human[] newChildren = Arrays.copyOf(children, children.length + 1);
         newChildren[children.length] = child;
         children = newChildren;
         child.setFamily(this);
     }
 
+    // Delete a child by index
     public boolean deleteChild(int index) {
         if (index < 0 || index >= children.length) return false;
         Human[] newChildren = new Human[children.length - 1];
         for (int i = 0, j = 0; i < children.length; i++) {
-            if (i != index) {
-                newChildren[j++] = children[i];
-            }
+            if (i != index) newChildren[j++] = children[i];
         }
         children = newChildren;
         return true;
     }
 
+    // Count family members
     public int countFamily() {
-        return 2 + children.length; // mother + father + children
+        return 2 + children.length; // 2 parents + children
     }
 
-    // toString
     @Override
     public String toString() {
-        StringBuilder childrenStr = new StringBuilder("[");
-        for (int i = 0; i < children.length; i++) {
-            childrenStr.append(children[i].toString());
-            if (i < children.length - 1) childrenStr.append(", ");
-        }
-        childrenStr.append("]");
-        return "Family{mother=" + mother + ", father=" + father + ", children=" + childrenStr + ", pet=" + pet + "}";
+        return "Family{" +
+                "mother=" + mother.getName() + " " + mother.getSurname() +
+                ", father=" + father.getName() + " " + father.getSurname() +
+                ", children=" + Arrays.toString(children) +
+                ", pet=" + pet +
+                '}';
     }
 
-    // equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Family)) return false;
-        Family f = (Family) o;
-        return mother.equals(f.mother) && father.equals(f.father);
+        Family family = (Family) o;
+        return Objects.equals(mother, family.mother) &&
+                Objects.equals(father, family.father) &&
+                Arrays.equals(children, family.children) &&
+                Objects.equals(pet, family.pet);
     }
 
     @Override
     public int hashCode() {
-        return mother.hashCode() + father.hashCode();
+        int result = Objects.hash(mother, father, pet);
+        result = 31 * result + Arrays.hashCode(children);
+        return result;
     }
 }
+
