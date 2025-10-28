@@ -72,8 +72,19 @@ public class Human {
 
     @Override
     public String toString() {
-        return "Human{name='" + name + "', surname='" + surname + "', year=" + year +
-                ", iq=" + iq + ", schedule=" + Arrays.deepToString(schedule) + "}";
+        StringBuilder sb = new StringBuilder("Human{name='")
+                .append(name).append("', surname='").append(surname)
+                .append("', year=").append(year);
+
+        if (iq > 0) {
+            sb.append(", iq=").append(iq);
+        }
+        if (schedule != null) {
+            sb.append(", schedule=").append(Arrays.deepToString(schedule));
+        }
+
+        sb.append("}");
+        return sb.toString();
     }
 
     @Override
