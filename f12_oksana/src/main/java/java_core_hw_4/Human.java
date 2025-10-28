@@ -1,5 +1,7 @@
 package java_core_hw_4;
 
+import java.util.Objects;
+
 public class Human {
     private String name;
     private String surname;
@@ -26,7 +28,11 @@ public class Human {
     }
 
     public Human(String name, String surname, int year, int iq, String[][] schedule, Family family) {
-        this(name, surname, year, iq, schedule);
+        this.name = name;
+        this.surname = surname;
+        this.year = year;
+        this.iq = iq;
+        this.schedule = schedule;
         this.family = family;
     }
 
@@ -91,9 +97,6 @@ public class Human {
 
     @Override
     public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + year;
-        return result;
+        return Objects.hash(name, surname, year);
     }
 }
