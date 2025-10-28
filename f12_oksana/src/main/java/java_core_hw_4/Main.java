@@ -2,32 +2,34 @@ package java_core_hw_4;
 
 public class Main {
     public static void main(String[] args) {
-        // Створюємо домашнього улюбленця
-        String[] habits = {"їсти", "спати", "ловити мишей"};
-        Pet cat = new Pet("cat", "Murka", 3, 60, habits);
+        // Create Pet
+        String[] habits = {"eat", "drink", "sleep"};
+        Pet dog = new Pet("dog", "Rock", 5, 75, habits);
 
-        // Створюємо батьків
-        Human mother = new Human("Anna", "Ivanova", 1985);
-        Human father = new Human("Oleh", "Ivanov", 1980);
+        // Create parents
+        Human mother = new Human("Jane", "Karleone", 1980);
+        Human father = new Human("Vito", "Karleone", 1975);
 
-        // Створюємо сім'ю
-        Family ivanovFamily = new Family(mother, father);
-        ivanovFamily.setPet(cat);
+        // Create family
+        Family family = new Family(mother, father);
+        family.setPet(dog);
 
-        // Створюємо дитину
-        String[][] schedule = {
-                {"Monday", "Swimming"},
-                {"Tuesday", "Piano"}
-        };
-        Human child = new Human("Andrii", "Ivanov", 2010, 90, schedule);
-        ivanovFamily.addChild(child);
+        // Create child
+        String[][] schedule = {{"Monday", "Gym"}, {"Tuesday", "Music"}};
+        Human child = new Human("Michael", "Karleone", 2005, 90, schedule);
+        family.addChild(child);
 
-        // Викликаємо методи дитини
+        // Demonstrate methods
         child.greetPet();
         child.describePet();
+        dog.eat();
+        dog.respond();
+        dog.foul();
 
-        // Виводимо інформацію
-        System.out.println("\n" + ivanovFamily);
-        System.out.println("Кількість членів сім'ї: " + ivanovFamily.countFamily());
+        // Print info
+        System.out.println("\n" + family);
+        System.out.println("Family size: " + family.countFamily());
+        System.out.println("\nChild info: " + child);
+        System.out.println("\nPet info: " + dog);
     }
 }

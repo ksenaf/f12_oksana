@@ -1,17 +1,14 @@
 package java_core_hw_4;
 
-import java.util.Arrays;
-import java.util.Objects;
-
 public class Human {
     private String name;
     private String surname;
     private int year;
     private int iq;
     private String[][] schedule;
-    private Family family; // тепер зберігає сімейну інформацію
+    private Family family;
 
-    // Конструктори
+    // Constructors
     public Human() {}
 
     public Human(String name, String surname, int year) {
@@ -29,31 +26,11 @@ public class Human {
     }
 
     public Human(String name, String surname, int year, int iq, String[][] schedule, Family family) {
-        this.name = name;
-        this.surname = surname;
-        this.year = year;
-        this.iq = iq;
-        this.schedule = schedule;
+        this(name, surname, year, iq, schedule);
         this.family = family;
     }
 
-    // Методи
-    public void greetPet() {
-        if (family != null && family.getPet() != null) {
-            System.out.println("Привіт, " + family.getPet().getNickname());
-        }
-    }
-
-    public void describePet() {
-        if (family != null && family.getPet() != null) {
-            Pet pet = family.getPet();
-            String cleverness = pet.getTrickLevel() > 50 ? "дуже хитрий" : "майже не хитрий";
-            System.out.println("У мене є " + pet.getSpecies() + ", їй " + pet.getAge() +
-                    " років, він " + cleverness);
-        }
-    }
-
-    // Гетери/Сетери
+    // Getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -72,24 +49,51 @@ public class Human {
     public Family getFamily() { return family; }
     public void setFamily(Family family) { this.family = family; }
 
-    @Override
-    public String toString() {
-        return "Human{name='" + name + "', surname='" + surname + "', year=" + year +
-                ", iq=" + iq + ", schedule=" + Arrays.deepToString(schedule) + "}";
+    // Methods
+    public void greetPet() {
+        if (family != null && family.getPet() != null)
+            System.out.println("Hello, " + family.getPet().getNickname());
     }
 
+    public void describePet() {
+        if (family != null && family.getPet() != null) {
+            Pet p = family.getPet();
+            String cleverness = (p.getTrickLevel() > 50) ? "very sly" : "almost not sly";
+            System.out.println("I have a " + p.getSpecies() + ", he is " + p.getAge() + " years old, he is " + cleverness);
+        }
+    }
+
+    // toString
+    @Override
+    public String toString() {
+        StringBuilder scheduleStr = new StringBuilder("[");
+        if (schedule != null) {
+            for (int i = 0; i < schedule.length; i++) {
+                scheduleStr.append("[")
+                        .append(schedule[i][0]).append(", ")
+                        .append(schedule[i][1]).append("]");
+                if (i < schedule.length - 1) scheduleStr.append(", ");
+            }
+        }
+        scheduleStr.append("]");
+        return "Human{name='" + name + "', surname='" + surname + "', year=" + year +
+                ", iq=" + iq + ", schedule=" + scheduleStr + "}";
+    }
+
+    // equals and hashCode
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Human)) return false;
-        Human human = (Human) o;
-        return year == human.year &&
-                Objects.equals(name, human.name) &&
-                Objects.equals(surname, human.surname);
+        Human h = (Human) o;
+        return year == h.year && name.equals(h.name) && surname.equals(h.surname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, year);
+        int result = name.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + year;
+        return result;
     }
 }
