@@ -9,7 +9,6 @@ public class Family {
     private Human[] children;
     private Pet pet;
 
-    // Constructor with two parents
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
@@ -18,7 +17,6 @@ public class Family {
         father.setFamily(this);
     }
 
-    // Getters and setters
     public Human getMother() { return mother; }
     public void setMother(Human mother) { this.mother = mother; }
     public Human getFather() { return father; }
@@ -28,7 +26,6 @@ public class Family {
     public Pet getPet() { return pet; }
     public void setPet(Pet pet) { this.pet = pet; }
 
-    // Add a child
     public void addChild(Human child) {
         Human[] newChildren = Arrays.copyOf(children, children.length + 1);
         newChildren[children.length] = child;
@@ -36,18 +33,6 @@ public class Family {
         child.setFamily(this);
     }
 
-    // Delete a child by index
-    public boolean deleteChild(int index) {
-        if (index < 0 || index >= children.length) return false;
-        Human[] newChildren = new Human[children.length - 1];
-        for (int i = 0, j = 0; i < children.length; i++) {
-            if (i != index) newChildren[j++] = children[i];
-        }
-        children = newChildren;
-        return true;
-    }
-
-    // Count family members
     public int countFamily() {
         return 2 + children.length; // 2 parents + children
     }
@@ -80,4 +65,3 @@ public class Family {
         return result;
     }
 }
-

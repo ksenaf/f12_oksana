@@ -10,20 +10,14 @@ public class Human {
     private int iq;
     private String[][] schedule;
     private Pet pet;
-    private Family family; // reference to the family
+    private Family family;
 
-    // Empty constructor
-    public Human() {
-    }
-
-    // Constructor with name, surname, year
     public Human(String name, String surname, int year) {
         this.name = name;
         this.surname = surname;
         this.year = year;
     }
 
-    // Constructor with name, surname, year, father and mother
     public Human(String name, String surname, int year, Family family) {
         this.name = name;
         this.surname = surname;
@@ -31,7 +25,6 @@ public class Human {
         this.family = family;
     }
 
-    // Constructor with all fields
     public Human(String name, String surname, int year, int iq, String[][] schedule, Pet pet, Family family) {
         this.name = name;
         this.surname = surname;
@@ -42,7 +35,6 @@ public class Human {
         this.family = family;
     }
 
-    // Getters and setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     public String getSurname() { return surname; }
@@ -58,7 +50,6 @@ public class Human {
     public Family getFamily() { return family; }
     public void setFamily(Family family) { this.family = family; }
 
-    // Methods
     public void greetPet() {
         if (pet != null) System.out.println("Hello, " + pet.getNickname());
     }

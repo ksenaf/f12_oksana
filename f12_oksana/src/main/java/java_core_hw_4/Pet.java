@@ -10,17 +10,11 @@ public class Pet {
     private int trickLevel; // 0 to 100
     private String[] habits;
 
-    // Empty constructor
-    public Pet() {
-    }
-
-    // Constructor with species and nickname
     public Pet(String species, String nickname) {
         this.species = species;
         this.nickname = nickname;
     }
 
-    // Constructor with all fields
     public Pet(String species, String nickname, int age, int trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
@@ -29,7 +23,6 @@ public class Pet {
         this.habits = habits;
     }
 
-    // Getters and setters
     public String getSpecies() { return species; }
     public void setSpecies(String species) { this.species = species; }
     public String getNickname() { return nickname; }
@@ -41,7 +34,6 @@ public class Pet {
     public String[] getHabits() { return habits; }
     public void setHabits(String[] habits) { this.habits = habits; }
 
-    // Methods
     public void eat() {
         System.out.println("I'm eating!");
     }
