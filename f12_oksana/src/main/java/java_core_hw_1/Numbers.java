@@ -11,7 +11,7 @@ public class Numbers {
         int randomNumber = random.nextInt(101);
 
         System.out.println("Please enter your name: ");
-        String playerName = scanner.nextLine(); //The player enters a name
+        String playerName = scanner.nextLine();
 
         System.out.println("Let the game begin!");
 
