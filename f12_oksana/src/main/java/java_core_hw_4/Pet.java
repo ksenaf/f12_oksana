@@ -10,11 +10,6 @@ public class Pet {
     private int trickLevel; // 0 to 100
     private String[] habits;
 
-    public Pet(String species, String nickname) {
-        this.species = species;
-        this.nickname = nickname;
-    }
-
     public Pet(String species, String nickname, int age, int trickLevel, String[] habits) {
         this.species = species;
         this.nickname = nickname;
@@ -39,7 +34,7 @@ public class Pet {
     }
 
     public void respond() {
-        System.out.println("Hello, owner. I am " + nickname + ". I missed you!");
+        System.out.println("Hello, owner. I am " + nickname + " the " + species + ". I missed you!");
     }
 
     public void foul() {

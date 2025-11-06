@@ -18,13 +18,6 @@ public class Human {
         this.year = year;
     }
 
-    public Human(String name, String surname, int year, Family family) {
-        this.name = name;
-        this.surname = surname;
-        this.year = year;
-        this.family = family;
-    }
-
     public Human(String name, String surname, int year, int iq, String[][] schedule, Pet pet, Family family) {
         this.name = name;
         this.surname = surname;

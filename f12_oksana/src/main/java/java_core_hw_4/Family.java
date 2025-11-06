@@ -7,12 +7,13 @@ public class Family {
     private Human mother;
     private Human father;
     private Human[] children;
-    private Pet pet;
+    private Pet[] pets;
 
     public Family(Human mother, Human father) {
         this.mother = mother;
         this.father = father;
-        this.children = new Human[0]; // initially empty
+        this.children = new Human[0];
+        this.pets = new Pet[0];
         mother.setFamily(this);
         father.setFamily(this);
     }
@@ -23,14 +24,30 @@ public class Family {
     public void setFather(Human father) { this.father = father; }
     public Human[] getChildren() { return children; }
     public void setChildren(Human[] children) { this.children = children; }
-    public Pet getPet() { return pet; }
-    public void setPet(Pet pet) { this.pet = pet; }
+    public Pet[] getPets() { return pets; }
+    public void setPets(Pet[] pets) { this.pets = pets; }
 
     public void addChild(Human child) {
         Human[] newChildren = Arrays.copyOf(children, children.length + 1);
         newChildren[children.length] = child;
         children = newChildren;
         child.setFamily(this);
+    }
+
+    public boolean deleteChild(int index) {
+        if (index < 0 || index >= children.length) return false;
+        Human[] newChildren = new Human[children.length - 1];
+        for (int i = 0, j = 0; i < children.length; i++) {
+            if (i != index) newChildren[j++] = children[i];
+        }
+        children = newChildren;
+        return true;
+    }
+
+    public void addPet(Pet pet) {
+        Pet[] newPets = Arrays.copyOf(pets, pets.length + 1);
+        newPets[pets.length] = pet;
+        pets = newPets;
     }
 
     public int countFamily() {
@@ -40,10 +57,10 @@ public class Family {
     @Override
     public String toString() {
         return "Family{" +
-                "mother=" + mother.getName() + " " + mother.getSurname() +
-                ", father=" + father.getName() + " " + father.getSurname() +
+                "mother=" + mother.getName() + " " + mother.getSurname() + " (" + mother.getYear() + ")" +
+                ", father=" + father.getName() + " " + father.getSurname() + " (" + father.getYear() + ")" +
                 ", children=" + Arrays.toString(children) +
-                ", pet=" + pet +
+                ", pets=" + Arrays.toString(pets) +
                 '}';
     }
 
@@ -55,13 +72,14 @@ public class Family {
         return Objects.equals(mother, family.mother) &&
                 Objects.equals(father, family.father) &&
                 Arrays.equals(children, family.children) &&
-                Objects.equals(pet, family.pet);
+                Arrays.equals(pets, family.pets);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(mother, father, pet);
+        int result = Objects.hash(mother, father);
         result = 31 * result + Arrays.hashCode(children);
+        result = 31 * result + Arrays.hashCode(pets);
         return result;
     }
 }
