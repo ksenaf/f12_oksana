@@ -28,7 +28,11 @@ public class Family {
     public void setPets(Pet[] pets) { this.pets = pets; }
 
     public void addChild(Human child) {
-        if (child == null) return;
+        if (child == null) {
+            System.out.println("You have not submitted anything!");
+            return;
+        }
+
         Human[] newChildren = new Human[children.length + 1];
         for (int i = 0; i < children.length; i++) {
             newChildren[i] = children[i];
@@ -52,7 +56,11 @@ public class Family {
     }
 
     public void addPet(Pet pet) {
-        if (pet == null) return;
+        if (pet == null) {
+            System.out.println("You have not submitted anything!");
+            return;
+        }
+
         Pet[] newPets = new Pet[pets.length + 1];
         for (int i = 0; i < pets.length; i++) {
             newPets[i] = pets[i];
@@ -63,6 +71,30 @@ public class Family {
 
     public int countFamily() {
         return 2 + children.length;
+    }
+
+    public static String[][] createJessicaSchedule() {
+        return new String[][]{
+                {DayOfWeek.MONDAY.getDisplayName(), "go to the gym"},
+                {DayOfWeek.TUESDAY.getDisplayName(), "watch a movie"},
+                {DayOfWeek.WEDNESDAY.getDisplayName(), "visit friends"},
+                {DayOfWeek.THURSDAY.getDisplayName(), "read a book"},
+                {DayOfWeek.FRIDAY.getDisplayName(), "have a family dinner"},
+                {DayOfWeek.SATURDAY.getDisplayName(), "go shopping"},
+                {DayOfWeek.SUNDAY.getDisplayName(), "rest"}
+        };
+    }
+
+    public static String[][] createMichaelSchedule() {
+        return new String[][]{
+                {DayOfWeek.MONDAY.getDisplayName(), "football practice"},
+                {DayOfWeek.TUESDAY.getDisplayName(), "do homework"},
+                {DayOfWeek.WEDNESDAY.getDisplayName(), "play video games"},
+                {DayOfWeek.THURSDAY.getDisplayName(), "piano lesson"},
+                {DayOfWeek.FRIDAY.getDisplayName(), "movie night"},
+                {DayOfWeek.SATURDAY.getDisplayName(), "go cycling"},
+                {DayOfWeek.SUNDAY.getDisplayName(), "rest"}
+        };
     }
 
     @Override

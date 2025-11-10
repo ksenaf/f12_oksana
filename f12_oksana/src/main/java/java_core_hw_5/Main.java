@@ -9,25 +9,8 @@ public class Main {
         Human mother = new Human("Jane", "Karleone", 1975);
         Human father = new Human("Vito", "Karleone", 1970);
 
-        String[][] scheduleJessica = {
-                {DayOfWeek.MONDAY.getDisplayName(), "go to the gym"},
-                {DayOfWeek.TUESDAY.getDisplayName(), "watch a movie"},
-                {DayOfWeek.WEDNESDAY.getDisplayName(), "visit friends"},
-                {DayOfWeek.THURSDAY.getDisplayName(), "read a book"},
-                {DayOfWeek.FRIDAY.getDisplayName(), "have a family dinner"},
-                {DayOfWeek.SATURDAY.getDisplayName(), "go shopping"},
-                {DayOfWeek.SUNDAY.getDisplayName(), "rest"}
-        };
-
-        String[][] scheduleMichael = {
-                {DayOfWeek.MONDAY.getDisplayName(), "football practice"},
-                {DayOfWeek.TUESDAY.getDisplayName(), "do homework"},
-                {DayOfWeek.WEDNESDAY.getDisplayName(), "play video games"},
-                {DayOfWeek.THURSDAY.getDisplayName(), "piano lesson"},
-                {DayOfWeek.FRIDAY.getDisplayName(), "movie night"},
-                {DayOfWeek.SATURDAY.getDisplayName(), "go cycling"},
-                {DayOfWeek.SUNDAY.getDisplayName(), "rest"}
-        };
+        String[][] scheduleJessica = Family.createJessicaSchedule();
+        String[][] scheduleMichael = Family.createMichaelSchedule();
 
         Human child1 = new Human("Michael", "Karleone", 2000, 90, scheduleMichael, dog, null);
         Human child2 = new Human("Jessica", "Karleone", 2003, 80, scheduleJessica, cat, null);
@@ -47,10 +30,6 @@ public class Main {
         System.out.println("\nFamily greets and describes their pets:");
         for (Pet pet : family.getPets()) {
             System.out.println("\n--- Pet: " + pet.getNickname() + " ---");
-            mother.setPet(pet);
-            father.setPet(pet);
-            child1.setPet(pet);
-            child2.setPet(pet);
 
             mother.greetPet();
             mother.describePet();
