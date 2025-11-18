@@ -111,7 +111,7 @@ class FamilyTest {
         assertTrue(familyString.contains("Alice"));
         assertTrue(familyString.contains("Bob"));
 
-        assertTrue(familyString.contains("Buddy"));
+        assertTrue(familyString.contains("Pit"));
     }
 
     @Test
