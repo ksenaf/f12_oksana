@@ -3,6 +3,9 @@ package java_core_hw_8;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Arrays;
@@ -59,6 +62,24 @@ class FamilyTest {
         family.addPet(null);
         assertEquals(1, family.getPets().size());
     }
+
+    @Test
+    void describeAge() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String birthDate = "01/01/2000";
+        Human human = new Human("John", "Smith", birthDate);
+
+        LocalDate birth = LocalDate.parse(birthDate, formatter);
+        LocalDate today = LocalDate.now();
+
+        Period age = Period.between(birth, today);
+
+        String expectedAge = age.getYears() + " years, " + age.getMonths() + " months, " + age.getDays() + " days";
+
+        assertEquals(expectedAge, human.describeAge());
+    }
+
     @Test
     void countFamily() {
         family.addChild(child1);
