@@ -1,29 +1,38 @@
 package java_core_hw_8;
 
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Map;
 
 public class Human {
     private String name;
     private String surname;
-    private int year;
+    private long birthDate;
     private int iq;
     private Map<String, String> schedule;
     private Family family;
 
-    public Human(String name, String surname, int year) {
+    public Human(String name, String surname, String birthDateStr) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
+        this.birthDate = parseBirthDate(birthDateStr);
     }
 
-    public Human(String name, String surname, int year, int iq, Map<String, String> schedule, Family family) {
+    public Human(String name, String surname, String birthDateStr, int iq, Map<String, String> schedule, Family family) {
         this.name = name;
         this.surname = surname;
-        this.year = year;
         this.iq = iq;
         this.schedule = schedule;
         this.family = family;
+        this.birthDate = parseBirthDate(birthDateStr);
+    }
+
+    public Human(String name, String surname, String birthDateStr, int iq) {
+        this.name = name;
+        this.surname = surname;
+        this.iq = iq;
+        this.birthDate = parseBirthDate(birthDateStr);
     }
 
     public String getName() {
@@ -42,13 +51,9 @@ public class Human {
         this.surname = surname;
     }
 
-    public int getYear() {
-        return year;
-    }
+    public long getBirthDate() { return birthDate; }
 
-    public void setYear(int year) {
-        this.year = year;
-    }
+    public void setBirthDate(long birthDate) { this.birthDate = birthDate; }
 
     public int getIq() {
         return iq;
@@ -74,6 +79,24 @@ public class Human {
         this.family = family;
     }
 
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+    private long parseBirthDate(String birthDateStr) {
+        LocalDate date = LocalDate.parse(birthDateStr, FORMATTER);
+        return date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli();
+    }
+
+    public String describeAge() {
+        LocalDate birth = Instant.ofEpochMilli(birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        Period period = Period.between(birth, LocalDate.now());
+
+        return String.format("%d years, %d months, %d days",
+                period.getYears(), period.getMonths(), period.getDays());
+    }
+
     public void greetPet(Pet pet) {
         System.out.println("Hello, " + pet.getNickname() + "!");
     }
@@ -88,9 +111,14 @@ public class Human {
 
     @Override
     public String toString() {
+        LocalDate date = Instant.ofEpochMilli(birthDate)
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
         StringBuilder sb = new StringBuilder("Human{name='")
-                .append(name).append("', surname='").append(surname)
-                .append("', year=").append(year);
+                .append(name)
+                .append("', surname='").append(surname)
+                .append("', birthDate=").append(date.format(FORMATTER));
 
         if (iq > 0) {
             sb.append(", iq=").append(iq);
@@ -108,7 +136,7 @@ public class Human {
         if (this == o) return true;
         if (!(o instanceof Human)) return false;
         Human human = (Human) o;
-        return year == human.year &&
+        return birthDate == human.birthDate &&
                 iq == human.iq &&
                 Objects.equals(name, human.name) &&
                 Objects.equals(surname, human.surname);
@@ -116,7 +144,7 @@ public class Human {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, year, iq);
+        return Objects.hash(name, surname, birthDate, iq);
     }
 }
 

@@ -1,8 +1,8 @@
 package java_core_hw_8;
 
 public final class Man extends Human {
-    public Man(String name, String surname, int year) {
-        super(name, surname, year);
+    public Man(String name, String surname, String birthDate) {
+        super(name, surname, birthDate);
     }
 
     @Override

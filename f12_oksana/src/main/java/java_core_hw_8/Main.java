@@ -18,14 +18,14 @@ public class Main {
         Fish fish = new Fish("Nemo", 1, 10, fishHabits);
         RoboCat roboCat = new RoboCat("Robo", 2, 80, roboCatHabits);
 
-        Woman mother = new Woman("Jane", "Karleone", 1975);
-        Man father = new Man("Vito", "Karleone", 1970);
+        Woman mother = new Woman("Jane", "Karleone", "03/02/1975");
+        Man father = new Man("Vito", "Karleone", "20/10/1970");
 
         Map<String, String> scheduleJessica = Family.createJessicaSchedule();
         Map<String, String> scheduleMichael = Family.createMichaelSchedule();
 
-        Human child1 = new Human("Michael", "Karleone", 2000, 90, scheduleMichael, null);
-        Human child2 = new Human("Jessica", "Karleone", 2003, 80, scheduleJessica, null);
+        Human child1 = new Human("Michael", "Karleone", "25/08/2000", 90, scheduleMichael, null);
+        Human child2 = new Human("Jessica", "Karleone", "15/03/2003", 80, scheduleJessica, null);
 
         Family family = new Family(mother, father);
 

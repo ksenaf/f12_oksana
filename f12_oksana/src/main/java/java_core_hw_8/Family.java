@@ -1,5 +1,8 @@
 package java_core_hw_8;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -99,9 +102,21 @@ public class Family {
 
     @Override
     public String toString() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        String motherBirth = Instant.ofEpochMilli(mother.getBirthDate())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .format(formatter);
+
+        String fatherBirth = Instant.ofEpochMilli(father.getBirthDate())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+                .format(formatter);
+
         return "Family{" +
-                "mother=" + mother.getName() + " " + mother.getSurname() + " (" + mother.getYear() + ")" +
-                ", father=" + father.getName() + " " + father.getSurname() + " (" + father.getYear() + ")" +
+                "mother=" + mother.getName() + " " + mother.getSurname() + " (" + motherBirth + ")" +
+                ", father=" + father.getName() + " " + father.getSurname() + " (" + fatherBirth + ")" +
                 ", children=" + children +
                 ", pets=" + pets +
                 '}';
