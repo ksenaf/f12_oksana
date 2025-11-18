@@ -20,10 +20,10 @@ class FamilyTest {
 
     @BeforeEach
     void setUp() {
-        mother = new Human("Anna", "Smith", 1985);
-        father = new Human("John", "Smith", 1980);
-        child1 = new Human("Lily", "Smith", 2010);
-        child2 = new Human("Mike", "Smith", 2012);
+        mother = new Human("Anna", "Smith", "12/10/1985");
+        father = new Human("John", "Smith", "25/03/1980");
+        child1 = new Human("Lily", "Smith", "08/11/2010");
+        child2 = new Human("Mike", "Smith", "18/08/2012");
 
         Set<String> catHabits = new HashSet<>(Arrays.asList("play", "sleep", "hunts"));
         cat = new DomesticCat("Murka", 3, 60, catHabits);
@@ -68,26 +68,41 @@ class FamilyTest {
     }
 
     @Test
-    void testToString() {
+    void testFamilyToString() {
+        Human mother = new Human("Jessica", "Smith", "15/05/1980", 120, Family.createJessicaSchedule(), null);
+        Human father = new Human("Michael", "Smith", "20/03/1978", 130, Family.createMichaelSchedule(), null);
+
+        Family family = new Family(mother, father);
+
+        Human child1 = new Human("Alice", "Smith", "10/02/2010", 110);
+        Human child2 = new Human("Bob", "Smith", "05/06/2012", 100);
         family.addChild(child1);
-        family.addPet(cat);
-        String str = family.toString();
-        assertTrue(str.contains("mother=Anna Smith (1985)"));
-        assertTrue(str.contains("father=John Smith (1980)"));
-        assertTrue(str.contains("children="));
-        assertTrue(str.contains("pets="));
+        family.addChild(child2);
+
+        Dog dog = new Dog("Pit", 3, 70, new HashSet<>());
+        family.addPet(dog);
+
+        String familyString = family.toString();
+
+        assertTrue(familyString.contains("Jessica Smith"));
+        assertTrue(familyString.contains("Michael Smith"));
+
+        assertTrue(familyString.contains("Alice"));
+        assertTrue(familyString.contains("Bob"));
+
+        assertTrue(familyString.contains("Buddy"));
     }
 
     @Test
     void testEquals() {
         Family sameFamily = new Family(
-                new Human("Anna", "Smith", 1985),
-                new Human("John", "Smith", 1980)
+                new Human("Anna", "Smith", "12/10/1985"),
+                new Human("John", "Smith", "25/03/1980")
         );
         assertEquals(family, sameFamily);
         Family differentFamily = new Family(
-                new Human("Kate", "Brown", 1987),
-                new Human("Paul", "Brown", 1982)
+                new Human("Kate", "Brown", "12/10/1987"),
+                new Human("Paul", "Brown", "25/03/1982")
         );
         assertNotEquals(family, differentFamily);
     }

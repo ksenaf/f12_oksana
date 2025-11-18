@@ -100,6 +100,20 @@ public class Family {
         return schedule;
     }
 
+    public static Map<String, String> scheduleAdoptedAnna() {
+        Map<String, String> schedule = new LinkedHashMap<>();
+
+        schedule.put(DayOfWeek.MONDAY.getDisplayName(), "go to music school");
+        schedule.put(DayOfWeek.TUESDAY.getDisplayName(), "read a book");
+        schedule.put(DayOfWeek.WEDNESDAY.getDisplayName(), "do homework");
+        schedule.put(DayOfWeek.THURSDAY.getDisplayName(), "cleaning");
+        schedule.put(DayOfWeek.FRIDAY.getDisplayName(), "go shopping");
+        schedule.put(DayOfWeek.SATURDAY.getDisplayName(), "training");
+        schedule.put(DayOfWeek.SUNDAY.getDisplayName(), "rest");
+
+        return schedule;
+    }
+
     @Override
     public String toString() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

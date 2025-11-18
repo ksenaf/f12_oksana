@@ -23,9 +23,11 @@ public class Main {
 
         Map<String, String> scheduleJessica = Family.createJessicaSchedule();
         Map<String, String> scheduleMichael = Family.createMichaelSchedule();
+        Map<String, String> scheduleAdoptedAnna = Family.scheduleAdoptedAnna();
 
         Human child1 = new Human("Michael", "Karleone", "25/08/2000", 90, scheduleMichael, null);
-        Human child2 = new Human("Jessica", "Karleone", "15/03/2003", 80, scheduleJessica, null);
+        Human child2 = new Human("Jessica", "Karleone", "15/03/2010", 80, scheduleJessica, null);
+        Human adoptedChild1 = new Human("Anna", "Karleone", "10/10/2012", 85, scheduleAdoptedAnna, null);
 
         Family family = new Family(mother, father);
 
@@ -36,10 +38,20 @@ public class Main {
 
         family.addChild(child1);
         family.addChild(child2);
+        family.addChild(adoptedChild1);
 
         System.out.println("Family before deletion:");
         System.out.println(family);
         System.out.println("Family members count: " + family.countFamily());
+
+        System.out.println("\n--- Age of parents ---");
+        System.out.println("Mother's age: " + mother.describeAge());
+        System.out.println("Father's age: " + father.describeAge());
+
+        System.out.println("\n--- Ages of all children ---");
+        for (Human child : family.getChildren()) {
+            System.out.println(child.getName() + " is " + child.describeAge());
+        }
 
         System.out.println("\nFamily greets and describes their pets:");
         for (Pet pet : family.getPets()) {
