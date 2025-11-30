@@ -60,7 +60,7 @@ public class FamilyService {
         return familyDao.deleteFamily(index);
     }
 
-    public Family bornChild(Family family, String maleName, String femaleName) {
+    public Family bornChild(Family family, String maleName, String femaleName, String birthDateStr) {
         boolean isBoy = Math.random() < 0.5;
         String name = isBoy ? maleName : femaleName;
 
@@ -68,17 +68,13 @@ public class FamilyService {
                 ? family.getFather().getSurname()
                 : family.getMother().getSurname();
 
-        String babyBirthDate = LocalDate.now()
-                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-
-        Human baby = new Human(name, surname, babyBirthDate);
+        Human baby = new Human(name, surname, birthDateStr);
 
         family.addChild(baby);
         familyDao.saveFamily(family);
 
         return family;
     }
-
 
     public Family adoptChild(Family family, Human child) {
         family.addChild(child);
@@ -87,9 +83,10 @@ public class FamilyService {
     }
 
     private int calculateAge(Human human) {
-        LocalDate birth = Instant.ofEpochSecond(human.getBirthDate())
+        LocalDate birth = Instant.ofEpochMilli(human.getBirthDate())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
+
         return Period.between(birth, LocalDate.now()).getYears();
     }
 

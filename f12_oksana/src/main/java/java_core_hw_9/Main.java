@@ -1,113 +1,139 @@
 package java_core_hw_9;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Arrays;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class Main {
+
+    private static String date(int yearsAgo) {
+        return LocalDate.now()
+                .minusYears(yearsAgo)
+                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    }
+
     public static void main(String[] args) {
 
-        Set<String> dogHabits = new HashSet<>(Arrays.asList("eat", "drink", "sleep"));
-        Set<String> catHabits = new HashSet<>(Arrays.asList("play", "sleep", "hunts"));
-        Set<String> fishHabits = new HashSet<>(Arrays.asList("swim", "eat"));
-        Set<String> roboCatHabits = new HashSet<>(Arrays.asList("charge", "meow"));
+        FamilyDao dao = new CollectionFamilyDao();
+        FamilyService service = new FamilyService(dao);
+        FamilyController controller = new FamilyController(service);
 
-        Dog dog = new Dog("Rock", 5, 45, dogHabits);
-        DomesticCat cat = new DomesticCat("Max", 3, 60, catHabits);
-        Fish fish = new Fish("Nemo", 1, 10, fishHabits);
-        RoboCat roboCat = new RoboCat("Robo", 2, 80, roboCatHabits);
+        // =============================================================
+        //                       FAMILY №1
+        // =============================================================
+        Human mom1 = new Human("Anna", "Koval", "01/01/1990");
+        Human dad1 = new Human("Oleh", "Koval", "02/02/1985");
+        Family family1 = controller.createNewFamily(mom1, dad1);
 
-        Woman mother = new Woman("Jane", "Karleone", "03/02/1975");
-        Man father = new Man("Vito", "Karleone", "20/10/1970");
+        Set<String> dogHabits1 = new HashSet<>(Arrays.asList("eat", "drink", "sleep"));
+        Dog dog1 = new Dog("Rock", 5, 45, dogHabits1);
+        controller.addPet(0, dog1);
 
-        Map<String, String> scheduleJessica = Family.createJessicaSchedule();
-        Map<String, String> scheduleMichael = Family.createMichaelSchedule();
-        Map<String, String> scheduleAdoptedAnna = Family.scheduleAdoptedAnna();
+        // =============================================================
+        //                        FAMILY №2
+        // =============================================================
+        Human mom2 = new Human("Iryna", "Petrenko", "11/03/1992");
+        Human dad2 = new Human("Taras", "Petrenko", "04/04/1988");
+        Family family2 = controller.createNewFamily(mom2, dad2);
 
-        Human child1 = new Human("Michael", "Karleone", "25/08/2000", 90, scheduleMichael, null);
-        Human child2 = new Human("Jessica", "Karleone", "15/03/2010", 80, scheduleJessica, null);
-        Human adoptedChild1 = new Human("Anna", "Karleone", "10/10/2012", 85, scheduleAdoptedAnna, null);
+        controller.bornChild(family2, "Andrii", "Sofia", "15/02/2010");
+        Human adopted2 = new Human("Petro", "Petrenko", date(5));
+        controller.adoptChild(family2, adopted2);
 
-        Family family = new Family(mother, father);
+        Set<String> catHabits = new HashSet<>(Arrays.asList("sleep", "jump", "scratch"));
+        DomesticCat cat = new DomesticCat("Myrka", 2, 25, catHabits);
+        controller.addPet(1, cat);
 
-        family.addPet(dog);
-        family.addPet(cat);
-        family.addPet(fish);
-        family.addPet(roboCat);
+        // =============================================================
+        //                       FAMILY №3
+        // =============================================================
+        Human mom3 = new Human("Olha", "Herasymenko", "12/05/1990");
+        Human dad3 = new Human("Roman", "Herasymenko", "03/03/1987");
+        Family family3 = controller.createNewFamily(mom3, dad3);
 
-        family.addChild(child1);
-        family.addChild(child2);
-        family.addChild(adoptedChild1);
+        controller.bornChild(family3, "Maksym", "Oksana", "15/02/2020");
+        controller.bornChild(family3, "Illia", "Natalia", "15/02/2014");
 
-        System.out.println("Family before deletion:");
+        Human adopted3 = new Human("Lida", "Herasymenko", date(7));
+        controller.adoptChild(family3, adopted3);
+
+        Set<String> fishHabits = new HashSet<>(Arrays.asList("swim"));
+        Fish fish = new Fish("Dory", 1, 10, fishHabits);
+
+        Set<String> roboHabits = new HashSet<>(Arrays.asList("charge", "scan"));
+        RoboCat robo = new RoboCat("XR-22", 0, 99, roboHabits);
+
+        controller.addPet(2, fish);
+        controller.addPet(2, robo);
+
+        // =============================================================
+        //                        FAMILY №4
+        // =============================================================
+        Human mom4 = new Human("Tetiana", "Shevchuk", "02/01/1993");
+        Human dad4 = new Human("Ivan", "Shevchuk", "05/05/1989");
+        Family family4 = controller.createNewFamily(mom4, dad4);
+
+        controller.bornChild(family4, "Bohdan", "Mariya", "15/02/2018");
+
+        Set<String> dogHabits4 = new HashSet<>(Arrays.asList("fetch", "guard"));
+        Dog dog4 = new Dog("Buddy", 2, 60, dogHabits4);
+        controller.addPet(3, dog4);
+
+        // =============================================================
+        //                        FAMILY №5
+        // =============================================================
+        Human mom5 = new Human("Yana", "Stasenko", "11/11/1991");
+        Human dad5 = new Human("Denys", "Stasenko", "10/10/1987");
+        Family family5 = controller.createNewFamily(mom5, dad5);
+
+        controller.bornChild(family5, "Serhii", "Nadiya", "15/02/2013");
+        controller.bornChild(family5, "Taras", "Liliya", "15/02/2012");
+        controller.bornChild(family5, "Artem", "Veronika", "15/02/2017");
+
+        Set<String> cat2Habits = new HashSet<>(Arrays.asList("sleep", "eat"));
+        DomesticCat cat2 = new DomesticCat("Barsik", 3, 15, cat2Habits);
+        controller.addPet(4, cat2);
+
+        System.out.println("\n=== ALL FAMILIES LIST ===");
+        List<Family> families = controller.getAllFamilies();
+
+        families.forEach(System.out::println);
+
+        System.out.println("\n=== We remove children over 10 years old ===");
+        controller.deleteAllChildrenOlderThen(10);
+
+        System.out.println("\n=== ALL FAMILIES AFTER UPDATE ===");
+        controller.displayAllFamilies();
+
+        int memberCount = 3;
+        long familiesWithMembers = controller.countFamiliesWithMemberNumber(memberCount);
+        System.out.println("\n=== Number of families with " + memberCount + " members ===");
+        System.out.println(familiesWithMembers);
+
+        System.out.println("\n=== Families with < 3 members ===");
+        System.out.println(controller.getFamiliesLessThan(3));
+
+        System.out.println("\n=== Families with > 3 members ===");
+        System.out.println(controller.getFamiliesBiggerThan(3));
+
+        System.out.println("\n=== We derive the family with index 3 ===");
+        int index = 3;
+        Family family = controller.getFamilyById(index);
         System.out.println(family);
-        System.out.println("Family members count: " + family.countFamily());
 
-        System.out.println("\n--- Age of parents ---");
-        System.out.println("Mother's age: " + mother.describeAge());
-        System.out.println("Father's age: " + father.describeAge());
-
-        System.out.println("\n--- Ages of all children ---");
-        for (Human child : family.getChildren()) {
-            System.out.println(child.getName() + " is " + child.describeAge());
-        }
-
-        System.out.println("\nFamily greets and describes their pets:");
-        for (Pet pet : family.getPets()) {
-            System.out.println("\n--- Pet: " + pet.getNickname() + " ---");
-
-            mother.greetPet(pet);
-            mother.describePet(pet);
-
-            father.greetPet(pet);
-            father.describePet(pet);
-
-            child1.greetPet(pet);
-            child1.describePet(pet);
-
-            child2.greetPet(pet);
-            child2.describePet(pet);
-        }
-
-        System.out.println("\n--- Unique methods of Humans ---");
-        mother.makeup();
-        father.repairCar();
-
-        System.out.println("\n--- Children schedules ---");
-        for (Human child : family.getChildren()) {
-            System.out.println("\n" + child.getName() + "’s schedule:");
-
-            for (Map.Entry<String, String> entry : child.getSchedule().entrySet()) {
-                System.out.println(entry.getKey() + " — " + entry.getValue());
-            }
-
-            System.out.println();
-        }
-
-        boolean deleted = family.deleteChild(0);
-        if (deleted) {
-            System.out.println("\nChild deleted successfully!");
+        System.out.println("\n=== List of animals in the family with index 2 ===");
+        Set<Pet> petsFamily = controller.getPets(2);
+        if (petsFamily != null && !petsFamily.isEmpty()) {
+            petsFamily.forEach(System.out::println);
         } else {
-            System.out.println("\nFailed to delete child!");
+            System.out.println("This family has no animals");
         }
 
-        System.out.println("\nFamily after deletion:");
-        System.out.println(family);
-        System.out.println("Family members count: " + family.countFamily());
+        System.out.println("\n=== Delete the family with index 2 ===");
+        int indexToDelete = 2;
+        boolean resultDelete = controller.deleteFamilyByIndex(indexToDelete);
 
-        System.out.println("\nPets interaction:");
-        dog.respond();
-        cat.respond();
-        fish.respond();
-        roboCat.respond();
-
-        dog.foul();
-        cat.foul();
-
-        dog.eat();
-        cat.eat();
-        fish.eat();
-        roboCat.eat();
+        System.out.println("\n=== Number of families ===");
+        System.out.println(controller.count());
     }
 }
